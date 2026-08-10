@@ -1,0 +1,47 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+cc_library(
+    name = "substrait",
+    srcs = [
+        "substrait/expression_internal.cc",
+        "substrait/extended_expression_internal.cc",
+        "substrait/extension_set.cc",
+        "substrait/extension_types.cc",
+        "substrait/options.cc",
+        "substrait/plan_internal.cc",
+        "substrait/relation_internal.cc",
+        "substrait/serde.cc",
+        "substrait/test_plan_builder.cc",
+        "substrait/type_internal.cc",
+        "substrait/util.cc",
+        "substrait/util_internal.cc",
+    ],
+    hdrs = [
+        "api.h",
+        "simple_extension_type_internal.h",
+        "substrait/api.h",
+        "substrait/expression_internal.h",
+        "substrait/extended_expression_internal.h",
+        "substrait/extension_set.h",
+        "substrait/extension_types.h",
+        "substrait/options.h",
+        "substrait/options_internal.h",
+        "substrait/plan_internal.h",
+        "substrait/relation.h",
+        "substrait/relation_internal.h",
+        "substrait/serde.h",
+        "substrait/test_plan_builder.h",
+        "substrait/test_util.h",
+        "substrait/type_fwd.h",
+        "substrait/type_internal.h",
+        "substrait/util.h",
+        "substrait/util_internal.h",
+        "substrait/visibility.h",
+
+    ],
+    include_prefix = "arrow/engine",
+    includes = [
+        "substrait",
+        "arrow/engine/substrait",
+    ],
+)
