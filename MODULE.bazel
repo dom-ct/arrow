@@ -1,0 +1,107 @@
+module(name = "arrow-deps", version = "0.0.0")
+
+bazel_dep(name = "rules_cc", version = "0.2.19")
+
+bazel_dep(name = "boost.system", version = "1.90.0.bcr.1")
+bazel_dep(name = "boringssl", version = "0.20260713.0")
+bazel_dep(name = "brotli", version = "1.2.0.bcr.1")
+bazel_dep(name = "bzip2", version = "1.0.8.bcr.4")
+bazel_dep(name = "double-conversion", version = "3.3.1")
+bazel_dep(name = "jemalloc", version = "5.3.0-bcr.alpha.5")
+bazel_dep(name = "lz4", version = "1.10.0.bcr.1")
+bazel_dep(name = "mimalloc", version = "2.2.4.bcr.2")
+bazel_dep(name = "rapidjson", version = "1.1.0.bcr.20250205")
+bazel_dep(name = "simdjson", version = "4.6.0")
+bazel_dep(name = "snappy", version = "1.2.2.bcr.3")
+
+bazel_dep(name = "xsimd", version = "8.1.0")
+bazel_dep(name = "zlib", version = "1.3.2")
+bazel_dep(name = "zstd", version = "1.5.7.bcr.1")
+bazel_dep(name = "opentelemetry-cpp", version = "1.27.0")
+bazel_dep(name = "boost.multiprecision", version = "1.90.0.bcr.1")
+
+bazel_dep(name = "gcc_toolchain", version = "0.11.0")
+
+## Add explcit dependency to rules_cc for Bazel 9.1.0
+
+# xsimd - Doesn't have Bazel files in github, BCR wraps its own MODULE and BUILD files
+xsimd_module = """module(
+    name = "xsimd",
+    version = "8.1.0",
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.19")
+"""
+
+xsimd_build = """
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+package(default_visibility = ["//visibility:public"])
+licenses(["notice"])  # BSD 3-Clause
+
+exports_files(["LICENSE"])
+
+cc_library(
+    name = "xsimd",
+    hdrs = glob(
+        [
+            "include/xsimd/*.hpp",
+            "include/xsimd/config/*.hpp",
+            "include/xsimd/math/*.hpp",
+            "include/xsimd/memory/*.hpp",
+            "include/xsimd/stl/*.hpp",
+            "include/xsimd/types/*.hpp",
+        ],
+    ),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+)
+"""
+
+
+archive_override(
+    module_name = "xsimd",
+    urls = ["https://github.com/xtensor-stack/xsimd/archive/refs/tags/8.1.0.tar.gz"],
+    strip_prefix = "xsimd-8.1.0",
+    integrity = "sha256-1SVRNg03cJZ1I30qBBjij3CZW1t82tfGdGJrz7v0gyg=",
+    patch_cmds = [
+        "cat > MODULE.bazel << 'EOF'\n" + xsimd_module + "EOF",
+        "cat > BUILD.bazel << 'EOF'\n" + xsimd_build + "EOF",
+    ],
+)
+
+# double-conversion - latest version in main already has it but it's not in BCR yet
+
+archive_override(
+    module_name = "double-conversion",
+    urls = ["https://github.com/google/double-conversion/archive/refs/tags/v3.3.1.tar.gz"],
+    strip_prefix = "double-conversion-3.3.1",
+    patch_cmds = [
+        "sed -i '1i\\load(\"@rules_cc//cc:defs.bzl\", \"cc_binary\", \"cc_library\", \"cc_test\")' BUILD",
+        "sed -i '$a\\bazel_dep(name = \"rules_cc\", version = \"0.2.19\")' MODULE.bazel",
+    ],
+    integrity = "sha256-/lSQEFXHEwLc3Fw8y+JlpsGRl483Yc4UFNCJXWsOqQ4=",
+)
+
+
+single_version_override(
+    module_name = "mimalloc",
+    version = "2.2.4.bcr.2",
+    patch_cmds = [
+        "sed -i '/name = \"mimalloc-lib\"/a\\    visibility = [\"//visibility:public\"],' BUILD.bazel",
+    ],
+)
+
+# gcc toolchain
+gcc_toolchains = use_extension("@gcc_toolchain//toolchain:module_extensions.bzl", "gcc_toolchains", dev_dependency = True)
+
+gcc_toolchains.toolchain(
+    name = "gcc_toolchain_x86_64",
+    target_arch = "x86_64",
+    gcc_version = "12.5.0",
+)
+use_repo(gcc_toolchains, "gcc_toolchain_x86_64")
+
+register_toolchains(
+    "@gcc_toolchain_x86_64//:cc_toolchain",
+    dev_dependency = True,
+)
