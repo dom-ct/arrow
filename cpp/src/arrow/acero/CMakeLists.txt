@@ -103,6 +103,8 @@ add_arrow_lib(arrow_acero
               STATIC_INSTALL_INTERFACE_LIBS
               ${ARROW_ACERO_STATIC_INSTALL_INTERFACE_LIBS})
 
+add_compile_options(-Wno-maybe-uninitialized)
+
 if(ARROW_BUILD_STATIC AND WIN32)
   target_compile_definitions(arrow_acero_static PUBLIC ARROW_ACERO_STATIC)
 endif()
