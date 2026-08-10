@@ -1,0 +1,199 @@
+module(
+  name = "arrow"
+)
+
+bazel_dep(name = "aws_sdk", version = "1.11.758")
+# ├ boringssl
+# ├ curl
+# ├ google_benchmark
+# ├ opentelemetry-cpp
+# ├ platforms
+# ├ rules_cc
+# └ rules_license
+
+bazel_dep(name = "google_benchmark", version = "1.9.5")
+# ├ bazel_skylib
+# ├ libpfm
+# ├ platforms
+# └ rules_cc
+
+# bazel_dep(name = "boost", version = "1.90.0.bcr.1") Version?
+
+bazel_dep(name = "brotli", version = "1.2.0.bcr.1")
+# └ rules_cc
+
+bazel_dep(name = "bzip2", version = "1.0.8.bcr.4")
+# ├ bazel_skylib
+# ├ platforms
+# └ rules_cc
+
+bazel_dep(name = "c-ares", version = "1.34.6")
+# ├ bazel_skylib
+# ├ platforms
+# └ rules_cc
+
+bazel_dep(name = "gflags", version = "2.3.1")
+# ├ platforms
+# └ rules_cc
+
+bazel_dep(name = "glog", version = "0.7.1.bcr.1")
+# ├ gflags
+# └ rules_cc
+
+bazel_dep(name = "google_cloud_cpp", version = "3.7.0")
+# ├ abseil-cpp
+# ├ bazel_skylib
+# ├ boringssl
+# ├ curl
+# ├ googleapis
+# ├ googleapis-cc
+# ├ googleapis-grpc-cc
+# ├ googletest
+# ├ grpc
+# ├ nlohmann_json
+# ├ opentelemetry-cpp
+# ├ platforms
+# ├ protobuf
+# ├ rules_apple
+# ├ rules_cc
+# ├ rules_proto
+# └ rules_python
+
+bazel_dep(name = "grpc", version = "1.83.0")
+# ├ abseil-cpp
+# ├ apple_support
+# ├ bazel_skylib
+# ├ boringssl
+# ├ c-ares
+# ├ cython
+# ├ envoy_api
+# ├ googleapis
+# ├ googleapis-cc
+# ├ googleapis-grpc-cc
+# ├ googleapis-python
+# ├ googletest
+# ├ opencensus-cpp
+# ├ openssl
+# ├ opentelemetry-cpp
+# ├ platforms
+# ├ protobuf
+# ├ protoc-gen-validate
+# ├ re2
+# ├ rules_apple
+# ├ rules_cc
+# ├ rules_go
+# ├ rules_proto
+# ├ rules_python
+# ├ rules_shell
+# ├ rules_swift
+# ├ xds
+# └ zlib
+
+bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
+# ├ abseil-cpp
+# ├ platforms
+# ├ re2
+# └ rules_cc
+
+bazel_dep(name = "llvm", version = "0.8.16")
+# ├ bazel_features
+# ├ bazel_lib
+# ├ bazel_skylib
+# ├ platforms
+# ├ rules_cc
+# ├ rules_go
+# ├ rules_python
+# ├ rules_shell
+# ├ tar.bzl
+# └ with_cfg.bzl
+
+bazel_dep(name = "lz4", version = "1.10.0.bcr.1")
+# ├ bazel_skylib
+# ├ platforms
+# └ rules_cc
+
+bazel_dep(name = "re2", version = "2025-11-05.bcr.1")
+# ├ abseil-cpp
+# ├ apple_support
+# ├ platforms
+# ├ pybind
+# ├ rules_cc
+# └ rules_python
+
+bazel_dep(name = "protobuf", version = "36.0-rc2")
+# ├ abseil-cpp20250512.120260526.0+7 (11.7mo)
+# ├ apple_support2.3.0as build_bazel_apple_support2.8.0+9 (5.0mo)
+# ├ bazel_features1.33.0as proto_bazel_features1.51.0+20 (11.4mo)
+# ├ bazel_skylib1.9.01.9.2+1 (7.3mo)
+# ├ jsoncpp1.9.6.bcr.2
+# ├ platforms0.0.111.1.0+2 (1.3y)
+# ├ re22024-07-02.bcr.12025-11-05.bcr.1+5 (11.9mo)
+# ├ rules_cc0.2.180.2.22+4 (2.6mo)
+# ├ rules_java8.6.19.7.0+31 (1.6y)
+# ├ rules_jvm_external6.77.1+5 (1.4y)
+# ├ rules_kotlin2.3.202.4.0+1 (3.0mo)
+# ├ rules_license1.0.0
+# ├ rules_pkg1.0.11.2.0+2 (1.4y)
+# ├ rules_proto7.1.0
+# ├ rules_python1.6.02.2.0+36 (10.1mo)
+# ├ rules_rust0.69.00.73.0+7 (5.2mo)
+# ├ rules_shell0.6.10.8.0+2 (7.2mo)
+# └ zlib1.3.1.bcr.5
+
+bazel_dep(name = "rapidjson", version = "1.1.0.bcr.20250205")
+# └ rules_cc
+
+bazel_dep(name = "snappy", version = "1.2.2.bcr.3")
+# ├ bazel_skylib
+# ├ platforms
+# └ rules_cc
+
+bazel_dep(name = "fbthrift", version = "2026.05.18.00")
+# ├ boost.algorithm
+# ├ boost.container
+# ├ boost.core
+# ├ fmt
+# ├ folly
+# ├ gflags
+# ├ glog
+# ├ openssl
+# └ rules_cc
+
+bazel_dep(name = "utf8proc", version = "2.11.0")
+# └ rules_cc
+
+bazel_dep(name = "zlib", version = "1.3.2")
+# ├ bazel_skylib
+# ├ platforms
+# ├ rules_cc
+# └ rules_license
+
+bazel_dep(name = "zstd", version = "1.5.7.bcr.1")
+# ├ platforms
+# └ rules_cc
+
+bazel_dep(name = "abseil-cpp", version = "20250814.2")
+# ├ bazel_skylib
+# ├ googletest
+# ├ platforms
+# └ rules_cc
+
+bazel_dep(name = "simdjson", version = "4.6.0")
+# ├ platforms
+# └ rules_cc
+
+bazel_dep(name = "xsimd", version = "8.1.0")
+single_version_override(
+    module_name = "xsimd",
+    patches = [
+        "//bazel/patches:module_dot_bazel.patch",
+        "//bazel/patches:add_build_file.patch",
+    ],
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.22")
+# ├ bazel_features
+# ├ bazel_skylib
+# ├ platforms
+# ├ protobuf
+# └ rules_python
