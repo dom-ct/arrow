@@ -111,8 +111,10 @@ cc_library(
     ],
     includes = [
         "cpp/src",
-        "cpp/src/arrow/vendored/xxhash",
+        "cpp/src/arrow/vendored/*",
         "cpp/thirdparty/flatbuffers/include",
+        "@xsimd/include",
+        "@snappy/include",
     ],
     textual_hdrs = [
         "cpp/src/arrow/vendored/xxhash/xxhash.c",
@@ -125,6 +127,7 @@ cc_library(
         "@double-conversion",
         "@lz4",
         "@mimalloc//:mimalloc-lib",
+        "@opentelemetry-cpp//api",
         "@rapidjson",
         "@simdjson",
         "@snappy",
