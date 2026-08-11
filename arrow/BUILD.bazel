@@ -13,9 +13,9 @@ genrule(
     srcs = ["cpp/src/arrow/util/config.h.cmake"],
     outs = ["cpp/src/arrow/util/config.h"],
     cmd = ("sed " +
-           "-e 's/@ARROW_VERSION_MAJOR@/3/g' " +
+           "-e 's/@ARROW_VERSION_MAJOR@/25/g' " +
            "-e 's/@ARROW_VERSION_MINOR@/0/g' " +
-           "-e 's/@ARROW_VERSION_PATCH@/0/g' " +
+           "-e 's/@ARROW_VERSION_PATCH@/1/g' " +
            "-e 's/cmakedefine ARROW_USE_NATIVE_INT128/undef ARROW_USE_NATIVE_INT128/g' " +
            "-e 's/cmakedefine/define/g' " +
            "$< >$@"),
@@ -33,9 +33,9 @@ genrule(
     srcs = ["cpp/src/parquet/parquet_version.h.in"],
     outs = ["cpp/src/parquet/parquet_version.h"],
     cmd = ("sed " +
-           "-e 's/@PARQUET_VERSION_MAJOR@/1/g' " +
-           "-e 's/@PARQUET_VERSION_MINOR@/5/g' " +
-           "-e 's/@PARQUET_VERSION_PATCH@/1/g' " +
+           "-e 's/@PARQUET_VERSION_MAJOR@/25/g' " +
+           "-e 's/@PARQUET_VERSION_MINOR@/0/g' " +
+           "-e 's/@PARQUET_VERSION_PATCH@/0/g' " +
            "$< >$@"),
 )
 
@@ -69,12 +69,14 @@ cc_library(
             "cpp/src/**/*fuzz*.cc",
             "cpp/src/**/file_to_stream.cc",
             "cpp/src/**/stream_to_file.cc",
-            "cpp/src/arrow/util/bpacking_avx2.cc",
-            "cpp/src/arrow/util/bpacking_avx512.cc",
-            "cpp/src/arrow/util/bpacking_neon.cc",
             "cpp/src/arrow/util/async_util.cc",
             "cpp/src/arrow/util/tracing_internal.cc",
             "cpp/src/arrow/memory_pool_jemalloc.cc",
+            "cpp/src/arrow/util/bpacking_avx2.cc",
+            "cpp/src/arrow/util/bpacking_avx512.cc",
+            "cpp/src/parquet/bloom_filter_avx2.cc",
+            "cpp/src/arrow/util/bpacking*",
+            "cpp/src/arrow/util/byte_stream_split_internal_avx2.cc",
         ],
     ) + select({
         "@bazel_tools//src/conditions:windows": [
@@ -83,11 +85,10 @@ cc_library(
         "//conditions:default": [],
     }),
     hdrs = [
-        # declare header from above genrule
         "cpp/src/arrow/util/config.h",
         "cpp/src/parquet/parquet_version.h",
         "cpp/src/arrow/util/config_internal.h",
-    ],
+    ] + glob(["cpp/src/arrow/**/*.h"]) + glob(["cpp/src/arrow/**/*.hpp"]),
     copts = select({
         "@bazel_tools//src/conditions:windows": [
             "/std:c++20",
@@ -96,25 +97,9 @@ cc_library(
             "-std=c++20",
         ],
     }),
-    defines = [
-        "ARROW_WITH_BROTLI",
-        "ARROW_WITH_SNAPPY",
-        "ARROW_WITH_LZ4",
-        "ARROW_WITH_ZLIB",
-        "ARROW_WITH_ZSTD",
-        "ARROW_WITH_BZ2",
-        "ARROW_STATIC",
-        "ARROW_EXPORT=",
-        "PARQUET_STATIC",
-        "PARQUET_EXPORT=",
-        "WIN32_LEAN_AND_MEAN",
-    ],
     includes = [
         "cpp/src",
-        "cpp/src/arrow/vendored/*",
         "cpp/thirdparty/flatbuffers/include",
-        "@xsimd/include",
-        "@snappy/include",
     ],
     textual_hdrs = [
         "cpp/src/arrow/vendored/xxhash/xxhash.c",
@@ -125,7 +110,8 @@ cc_library(
         "@brotli",
         "@bzip2",
         "@double-conversion",
-        "@lz4",
+        "@glog",
+        "@lz4//:lz4_frame",
         "@mimalloc//:mimalloc-lib",
         "@opentelemetry-cpp//api",
         "@rapidjson",
