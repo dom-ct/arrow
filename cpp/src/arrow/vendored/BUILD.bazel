@@ -1,0 +1,40 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+exports_files(["strptime.h"])
+
+cc_library(
+    name = "datetime",
+    srcs = [
+        "datetime.cpp",
+        "datetime/tz_private.h",
+        "datetime/visibility.h",
+    ],
+    hdrs = [
+        "datetime.h",
+        "datetime/date.h",
+        "datetime/tz.h",
+        "datetime/tz.cpp", # Really
+    ],
+    deps = [
+        "@curl",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "safeint",
+    srcs = ["safeint/safe_math_impl.h"],
+    hdrs = ["safeint/safe_math.h"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "xxhash",
+    srcs = ["xxhash/xxhash.c"],
+    hdrs = [
+        "xxhash.h",
+        "xxhash/xxhash.h",
+    ],
+    visibility = ["//visibility:public"],
+)
+

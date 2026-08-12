@@ -37,11 +37,10 @@ cc_library(
         "substrait/util.h",
         "substrait/util_internal.h",
         "substrait/visibility.h",
-
     ],
     include_prefix = "arrow/engine",
     includes = [
-        "substrait",
         "arrow/engine/substrait",
+        "substrait",
     ],
 )
