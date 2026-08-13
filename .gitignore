@@ -94,7 +94,4 @@ rat.txt
 
 # for ODBC DLL
 *.rc
-cpp/bazel-bin
-cpp/bazel-cpp
-cpp/bazel-out
-cpp/bazel-testlogs
+cpp/build
