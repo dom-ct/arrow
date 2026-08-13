@@ -94,5 +94,4 @@ rat.txt
 
 # for ODBC DLL
 *.rc
-=======
 cpp/build
